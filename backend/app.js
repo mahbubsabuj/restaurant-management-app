@@ -13,11 +13,11 @@ app.use(express.json());
 app.use(morgan("tiny"));
 
 //routes
-const usersRoutes = require('./routes/users');
+const usersRoutes = require("./routes/users");
+const categoriesRoutes = require("./routes/categories");
 
-
-
-app.use('/users', usersRoutes);
+app.use("/users", usersRoutes);
+app.use("/categories", categoriesRoutes);
 //connection
 
 mongoose
