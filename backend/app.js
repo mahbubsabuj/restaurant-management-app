@@ -15,9 +15,11 @@ app.use(morgan("tiny"));
 //routes
 const usersRoutes = require("./routes/users");
 const categoriesRoutes = require("./routes/categories");
+const productsRoutes = require("./routes/products");
 
 app.use("/users", usersRoutes);
 app.use("/categories", categoriesRoutes);
+app.use("/products", productsRoutes);
 //connection
 
 mongoose
