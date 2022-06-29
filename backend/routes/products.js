@@ -14,7 +14,73 @@ router.get("/", auth.auth, async (req, res) => {
   return res.status(200).send(productList);
 });
 
+router.get(
+  "/category/:id",
+  auth.auth,
+  checkRole.checkRole,
+  async (req, res) => {
+    const id = req.params.id;
+    if (!mongoose.isValidObjectId(id)) {
+      return res
+        .status(400)
+        .json({ success: false, message: "invalid category id" });
+    }
+    const productList = await Product.find({ category: id, status: true });
+    if (!productList) {
+      return res
+        .status(500)
+        .json({ success: false, message: "cannot get product list" });
+    }
+    return res.status(200).send(productList);
+  }
+);
+
 //PUTS
+
+router.put("/:id", auth.auth, checkRole.checkRole, async (req, res) => {
+  const id = req.params.id;
+  if (!mongoose.isValidObjectId(id)) {
+    return res
+      .status(400)
+      .json({ success: false, message: "invalid product id" });
+  }
+  const { name, category, description, price, status } = req.body;
+  const product = await Product.findByIdAndUpdate(
+    id,
+    { name, category, description, price, status },
+    { new: true }
+  );
+  if (!product) {
+    return res
+      .status(500)
+      .json({ success: false, message: "product cannot be updated" });
+  }
+  return res.status(200).send(product);
+});
+
+router.put(
+  "/updateStatus/:id",
+  auth.auth,
+  checkRole.checkRole,
+  async (req, res) => {
+    const id = req.params.id;
+    const status = req.body.status;
+    if (!mongoose.isValidObjectId(id)) {
+      return res
+        .status(400)
+        .json({ success: false, message: "invalid product id" });
+    }
+    const product = await Product.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+    if (!product) {
+      return res.status(500).json({success: false, message: 'product status cannot be updated'})
+    }
+    return res.status(200).json({success: true, message: 'product status updated successfully'})
+  }
+);
 
 //POSTS
 router.post("/", auth.auth, checkRole.checkRole, async (req, res) => {
@@ -27,6 +93,25 @@ router.post("/", auth.auth, checkRole.checkRole, async (req, res) => {
       .json({ success: false, message: "Product could not be created" });
   }
   return res.status(201).send(product);
+});
+
+//DELETE
+router.delete("/:id", auth.auth, checkRole.checkRole, async (req, res) => {
+  const id = req.params.id;
+  if (!mongoose.isValidObjectId(id)) {
+    return res
+      .status(400)
+      .json({ success: false, message: "invalid product id" });
+  }
+  const product = await Product.findByIdAndDelete(id);
+  if (!product) {
+    return res
+      .status(500)
+      .json({ success: false, message: "product cannot be deleted" });
+  }
+  return res
+    .status(200)
+    .json({ success: true, message: "product deleted successfully" });
 });
 
 module.exports = router;
