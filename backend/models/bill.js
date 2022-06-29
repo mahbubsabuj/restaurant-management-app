@@ -7,7 +7,7 @@ const billSchema = mongoose.Schema({
   uuid: { type: String, required: true },
   paymentMethod: { type: String, required: true },
   total: { type: Number, required: true },
-  productDetails: { type: JSON, default: null },
+  productDetails: { type: Object, default: null },
   createdBy: { type: mongoose.Schema.Types.ObjectId, required: true },
 });
 
