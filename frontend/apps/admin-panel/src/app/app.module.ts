@@ -52,6 +52,10 @@ import {
   PB_DIRECTION,
 } from 'ngx-ui-loader';
 import { Route, RouterModule } from '@angular/router';
+import { HotToastModule } from '@ngneat/hot-toast';
+import { UtilitiesModule } from '@frontend/utilities';
+import { UsersModule } from '@frontend/users';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Route[] = [{ path: '', component: HomePageComponent }];
 
@@ -105,6 +109,8 @@ const UI_MODULES = [
   MatToolbarModule,
   MatTooltipModule,
   NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+  HotToastModule.forRoot(),
+  UtilitiesModule,
 ];
 
 @NgModule({
@@ -113,15 +119,17 @@ const UI_MODULES = [
     NxWelcomeComponent,
     HomePageComponent,
     SignupComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
     UI_MODULES,
+    UsersModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

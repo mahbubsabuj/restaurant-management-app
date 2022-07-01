@@ -3,6 +3,8 @@
   "version": 2,
   "projects": {
     "admin-panel": "apps/admin-panel",
-    "admin-panel-e2e": "apps/admin-panel-e2e"
+    "admin-panel-e2e": "apps/admin-panel-e2e",
+    "users": "libs/users",
+    "utilities": "libs/utilities"
   }
 }
