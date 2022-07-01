@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { User, UsersService } from '@frontend/users';
+import { LocalStorageService, ToastService } from '@frontend/utilities';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { take } from 'rxjs';
 
@@ -18,8 +19,10 @@ export class LoginComponent {
   constructor(
     private usersService: UsersService,
     private router: Router,
+    private toastService: ToastService,
     private dialogRef: MatDialogRef<LoginComponent>,
-    private ngxService: NgxUiLoaderService
+    private ngxService: NgxUiLoaderService,
+    private localStorageService: LocalStorageService
   ) {}
   onFormSubmit() {
     this.ngxService.start();
@@ -32,14 +35,20 @@ export class LoginComponent {
       .pipe(take(1))
       .subscribe({
         next: (user) => {
+          this.localStorageService.setToken(user.token ? user.token : '');
           this.ngxService.stop();
           this.dialogRef.close();
           console.log(user);
+          this.toastService.successToast('Successfully Logged in');
           // this.router.navigateByUrl('/admin-panel/deshboard')
         },
-        error: (error) => {
+        error: (error: ErrorEvent) => {
           this.ngxService.stop();
-          console.log(error);
+          if (error.error.message) {
+            this.toastService.errorToast(error.error.message);
+          } else {
+            this.toastService.errorToast('Please try again later');
+          }
         },
       });
   }
