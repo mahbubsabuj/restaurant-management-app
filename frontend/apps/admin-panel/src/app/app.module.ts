@@ -57,16 +57,24 @@ import { HotToastModule } from '@ngneat/hot-toast';
 import { UtilitiesModule } from '@frontend/utilities';
 import { UsersModule } from '@frontend/users';
 import { LoginComponent } from './components/login/login.component';
-import { DeshboardComponent } from './pages/deshboard/deshboard.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { HeaderComponent } from './shared/header/header.component';
+import { FooterComponent } from './shared/footer/footer.component';
+import { PanelComponent } from './pages/panel/panel.component';
+import { CategoryComponent } from './pages/category/category.component';
 
 const routes: Route[] = [
   { path: '', component: HomePageComponent },
   {
-    path: 'deshboard',
-    component: DeshboardComponent,
+    path: 'panel',
+    component: PanelComponent,
     canActivate: [AuthGuardService],
-    children: [{ path: 'deshboard', component: DeshboardComponent }],
+    children: [
+      { path: '', component: DashboardComponent },
+      { path: 'category', component: CategoryComponent },
+    ],
   },
+  { path: '**', redirectTo: '' },
 ];
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -130,7 +138,11 @@ const UI_MODULES = [
     HomePageComponent,
     SignupComponent,
     LoginComponent,
-    DeshboardComponent,
+    DashboardComponent,
+    HeaderComponent,
+    FooterComponent,
+    PanelComponent,
+    CategoryComponent,
   ],
   imports: [
     BrowserModule,

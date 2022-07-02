@@ -38,9 +38,8 @@ export class LoginComponent {
           this.localStorageService.setToken(user.token ? user.token : '');
           this.ngxService.stop();
           this.dialogRef.close();
-          console.log(user);
           this.toastService.successToast('Successfully Logged in');
-          this.router.navigateByUrl('/deshboard')
+          this.router.navigateByUrl('/panel');
         },
         error: (error: ErrorEvent) => {
           this.ngxService.stop();
