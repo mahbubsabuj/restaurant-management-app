@@ -40,7 +40,7 @@ export class LoginComponent {
           this.dialogRef.close();
           console.log(user);
           this.toastService.successToast('Successfully Logged in');
-          // this.router.navigateByUrl('/admin-panel/deshboard')
+          this.router.navigateByUrl('/deshboard')
         },
         error: (error: ErrorEvent) => {
           this.ngxService.stop();

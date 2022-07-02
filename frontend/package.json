@@ -25,6 +25,7 @@
     "@ngneat/hot-toast": "^4.1.0",
     "@ngneat/overview": "^3.0.0",
     "@nrwl/angular": "14.3.6",
+    "jwt-decode": "^3.1.2",
     "ngx-ui-loader": "^13.0.0",
     "rxjs": "~7.4.0",
     "tslib": "^2.0.0",

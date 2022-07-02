@@ -6,7 +6,7 @@ import { NxWelcomeComponent } from './nx-welcome.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 //MAT MODULES
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -51,13 +51,23 @@ import {
   SPINNER,
   PB_DIRECTION,
 } from 'ngx-ui-loader';
+import { AuthGuardService, JwtInterceptor } from '@frontend/users';
 import { Route, RouterModule } from '@angular/router';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { UtilitiesModule } from '@frontend/utilities';
 import { UsersModule } from '@frontend/users';
 import { LoginComponent } from './components/login/login.component';
+import { DeshboardComponent } from './pages/deshboard/deshboard.component';
 
-const routes: Route[] = [{ path: '', component: HomePageComponent }];
+const routes: Route[] = [
+  { path: '', component: HomePageComponent },
+  {
+    path: 'deshboard',
+    component: DeshboardComponent,
+    canActivate: [AuthGuardService],
+    children: [{ path: 'deshboard', component: DeshboardComponent }],
+  },
+];
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   text: 'Loading...',
@@ -120,6 +130,7 @@ const UI_MODULES = [
     HomePageComponent,
     SignupComponent,
     LoginComponent,
+    DeshboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -131,7 +142,9 @@ const UI_MODULES = [
     UI_MODULES,
     UsersModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
   exports: [HomePageComponent, SignupComponent],
 })
