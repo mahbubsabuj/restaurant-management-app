@@ -30,6 +30,7 @@ export class AuthService {
     const token = this.localStorageService.getToken();
     if (token !== '') {
       const decoded: AuthInfo = JSON.parse(atob(token.split('.')[1]));
+      console.log(decoded)
       return decoded.id;
     }
     return '';

@@ -1,3 +1,8 @@
 export interface DialogData {
-    message: string;
-  }
+  message: string;
+}
+
+export interface Success {
+  success: boolean;
+  message: string;
+}

@@ -4,6 +4,7 @@ require("dotenv/config");
 function auth(req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
+  console.log("TOKEN", token)
   if (token === null) {
     return res
       .sendStatus(401)
@@ -11,11 +12,12 @@ function auth(req, res, next) {
   }
   jwt.verify(token, process.env.JWT_TOKEN, (error, response) => {
     if (error) {
-        return res.sendStatus(403);
+      // console.log(error);
+      return res.sendStatus(403);
     }
     res.locals = response;
     next();
-  }) 
+  });
 }
 
-module.exports = {auth : auth}
+module.exports = { auth: auth };

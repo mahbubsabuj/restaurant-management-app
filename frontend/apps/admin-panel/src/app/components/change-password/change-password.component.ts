@@ -28,26 +28,37 @@ export class ChangePasswordComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.authService.getId();
-    // const password = this.changePasswordForm.controls['newPassword'].value;
+    console.log(this.id)
   }
   onFormSubmit() {
     if (!this.isPasswordMatched()) {
-      this.toastService.errorToast('New Password and Confirm Password does not match.')
+      this.toastService.errorToast(
+        'New Password and Confirm Password does not match.'
+      );
       return;
     }
     this.ngxService.start();
     const password = this.changePasswordForm.controls['newPassword'].value;
-    this.usersService.changePassword(this.id, password).pipe(take(1)).subscribe({
-      next: (response) => {
-        console.log(response);
-        this.ngxService.stop();
-        this.dialogRef.close();
-      },
-      error: (error) => {
-        console.log(error);
-        this.ngxService.stop();
-      }
-    })
+    this.usersService
+      .changePassword(this.id, password)
+      .pipe(take(1))
+      .subscribe({
+        next: (response) => {
+          this.toastService.successToast(response.message);
+          this.ngxService.stop();
+          this.dialogRef.close();
+        },
+        error: (error: ErrorEvent) => {
+          console.log(error)
+          if (error.error.message) {
+            
+            this.toastService.errorToast(error.error.message);
+          } else {
+            this.toastService.errorToast('password cannot be changed');
+          }
+          this.ngxService.stop();
+        },
+      });
   }
   isPasswordMatched() {
     return (

@@ -103,24 +103,19 @@ router.post("/login", async (req, res) => {
 
 router.put("/changePassword/:id", auth.auth, async (req, res) => {
   const id = req.params.id;
+  console.log(id);
   const { password } = req.body;
-  const user = await User.findByIdAndDelete(id, {
+  const user = await User.findByIdAndUpdate(id, {
     passwordHash: bcrypt.hashSync(password, +salt),
   });
   if (!user) {
     return res
       .status(500)
-      .json({ success: false, message: "user cannot be updated" });
+      .json({ success: false, message: "password cannot be updated" });
   }
   return res
     .status(200)
-    .json({ success: true, message: "user updated successfully" });
+    .json({ success: true, message: "password updated successfully" });
 });
 
 module.exports = router;
-// name: { type: String, required: true },
-// contactNumber: { type: String, required: true },
-// email: { type: String, required: true },
-// passwordHash: { type: String, required: true },
-// status: { type: String, required: true },
-// role: { type: String, required: true },

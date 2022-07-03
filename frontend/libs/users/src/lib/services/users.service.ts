@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.model';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
+import { Success } from '@frontend/utilities';
 @Injectable({
   providedIn: 'root',
 })
@@ -21,10 +22,10 @@ export class UsersService {
       user
     );
   }
-  changePassword(id: string, password: string): Observable<unknown> {
-    return this.httpClient.put<unknown>(
+  changePassword(id: string, password: string): Observable<Success> {
+    return this.httpClient.put<Success>(
       `${environment.apiURL}/users/changePassword/${id}`,
-      { password }
+      { password: password }
     );
   }
 }
