@@ -4,15 +4,23 @@
   </button>
   <mat-icon style="padding-right: 5px">restaurant</mat-icon>
   <h2>Restaurant Management System</h2>
+  <div class="spacer"></div>
+  <button mat-icon-button [mat-menu-trigger-for]="profile">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+  <mat-menu #profile="matMenu" class="">
+    <button mat-menu-item (click)="changePassword()"><mat-icon>password</mat-icon> Change Password</button>
+    <button mat-menu-item (click)="logOut()"><mat-icon>exit_to_app</mat-icon> Sign Out</button>
+  </mat-menu>
 </mat-toolbar>
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="side" opened="true">
     <mat-nav-list>
-      <a mat-raised-button>
+      <a mat-raised-button routerLink="/panel">
         <mat-icon>dashboard</mat-icon>
         Dashboard
       </a>
-      <a mat-raised-button>
+      <a mat-raised-button routerLink="category">
         <mat-icon>category</mat-icon>
         Categories
       </a>

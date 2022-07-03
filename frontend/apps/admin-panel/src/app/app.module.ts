@@ -62,6 +62,7 @@ import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { PanelComponent } from './pages/panel/panel.component';
 import { CategoryComponent } from './pages/category/category.component';
+import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 
 const routes: Route[] = [
   { path: '', component: HomePageComponent },
@@ -143,6 +144,7 @@ const UI_MODULES = [
     FooterComponent,
     PanelComponent,
     CategoryComponent,
+    ConfirmationComponent,
   ],
   imports: [
     BrowserModule,

@@ -97,18 +97,20 @@
       </div>
     </form>
   </mat-dialog-content>
-  <mat-dialog-actions align="center">
-    <button
-      mat-raised-button
-      color="primary"
-      type="submit"
-      (click)="onFormSubmit()"
-      [disabled]="userForm.invalid"
-    >
-      Signup
-    </button>
-    <button mat-raised-button color="primary" mat-dialog-close="true">
-      Close
-    </button>
-  </mat-dialog-actions>
+  <div class="actions">
+    <mat-dialog-actions align="center">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        (click)="onFormSubmit()"
+        [disabled]="userForm.invalid"
+      >
+        Signup
+      </button>
+      <button mat-raised-button color="primary" mat-dialog-close="true">
+        Close
+      </button>
+    </mat-dialog-actions>
+  </div>
 </div>

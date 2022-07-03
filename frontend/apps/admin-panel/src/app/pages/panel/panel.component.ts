@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { AuthService } from '@frontend/users';
+import { ConfirmationComponent } from '../../components/confirmation/confirmation.component';
 
 @Component({
   selector: 'frontend-panel',
@@ -7,8 +10,26 @@ import { Router } from '@angular/router';
   styles: [],
 })
 export class PanelComponent {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private dialog: MatDialog
+  ) {}
   handleNavigation() {
     this.router.navigateByUrl('category');
+  }
+  logOut() {
+    const dialogRef = this.dialog.open(ConfirmationComponent, {
+      data: { message: 'Logout' },
+    });
+    dialogRef.componentInstance.EmitStatusChange.subscribe(() => {
+      dialogRef.close();
+      this.authService.logOut();
+      this.router.navigateByUrl('/');
+    });
+  }
+
+  changePassword() {
+    //
   }
 }
