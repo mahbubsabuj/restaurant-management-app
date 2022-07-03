@@ -82,7 +82,7 @@ router.post("/login", async (req, res) => {
   if (user && bcrypt.compareSync(password, user.passwordHash)) {
     if (user.status) {
       const accessToken = jwt.sign(
-        { email: user.email, role: user.role },
+        { id: user._id, email: user.email, role: user.role },
         process.env.JWT_TOKEN,
         { expiresIn: "24h" }
       );

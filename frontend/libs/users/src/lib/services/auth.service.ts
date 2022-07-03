@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 import { User } from '../models/user.model';
+import { AuthInfo } from '../models/auth-info.model';
 
 @Injectable({
   providedIn: 'root',
@@ -24,5 +25,13 @@ export class AuthService {
   logOut(): void {
     this.localStorageService.removeToken();
     this.router.navigateByUrl('/');
+  }
+  getId(): string {
+    const token = this.localStorageService.getToken();
+    if (token !== '') {
+      const decoded: AuthInfo = JSON.parse(atob(token.split('.')[1]));
+      return decoded.id;
+    }
+    return '';
   }
 }

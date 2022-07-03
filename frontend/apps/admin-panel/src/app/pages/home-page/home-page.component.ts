@@ -19,12 +19,12 @@ export class HomePageComponent implements OnInit {
   }
   handleSignUpAction() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '650px';
-    this.dialog.open(SignupComponent);
+    dialogConfig.width = '550px';
+    this.dialog.open(SignupComponent, dialogConfig);
   }
   handleLoginAction() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '650px';
-    this.dialog.open(LoginComponent);
+    dialogConfig.width = '550px';
+    this.dialog.open(LoginComponent, dialogConfig);
   }
 }

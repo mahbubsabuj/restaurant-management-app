@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from '@frontend/users';
+import { DialogData } from '@frontend/utilities';
+import { ChangePasswordComponent } from '../../components/change-password/change-password.component';
 import { ConfirmationComponent } from '../../components/confirmation/confirmation.component';
 
 @Component({
@@ -19,8 +21,9 @@ export class PanelComponent {
     this.router.navigateByUrl('category');
   }
   logOut() {
+    const dialogData: DialogData = { message: 'Logout' };
     const dialogRef = this.dialog.open(ConfirmationComponent, {
-      data: { message: 'Logout' },
+      data: dialogData,
     });
     dialogRef.componentInstance.EmitStatusChange.subscribe(() => {
       dialogRef.close();
@@ -30,6 +33,8 @@ export class PanelComponent {
   }
 
   changePassword() {
-    //
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '550px';
+    this.dialog.open(ChangePasswordComponent, dialogConfig);
   }
 }

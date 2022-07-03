@@ -8,12 +8,14 @@
       text-align: center;
     }
   }
+  .mat-form-field {
+    width: 100%;
+  }
   .actions {
     .mat-dialog-actions {
-      margin: 10px;
       .mat-raised-button {
         height: 40px;
-        width: 50px;
+        width: 70px;
       }
     }
   }

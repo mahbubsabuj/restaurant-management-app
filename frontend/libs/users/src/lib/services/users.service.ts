@@ -16,10 +16,15 @@ export class UsersService {
     );
   }
   login(user: User): Observable<User> {
-    
     return this.httpClient.post<User>(
       `${environment.apiURL}/users/login`,
       user
+    );
+  }
+  changePassword(id: string, password: string): Observable<unknown> {
+    return this.httpClient.put<unknown>(
+      `${environment.apiURL}/users/changePassword/${id}`,
+      { password }
     );
   }
 }
