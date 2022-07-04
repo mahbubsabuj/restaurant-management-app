@@ -17,9 +17,11 @@ export class PanelComponent {
     private authService: AuthService,
     private dialog: MatDialog
   ) {}
+  
   handleNavigation() {
     this.router.navigateByUrl('category');
   }
+
   logOut() {
     const dialogData: DialogData = { message: 'Logout' };
     const dialogRef = this.dialog.open(ConfirmationComponent, {
