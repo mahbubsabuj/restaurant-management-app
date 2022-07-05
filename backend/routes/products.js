@@ -14,6 +14,22 @@ router.get("/", auth.auth, async (req, res) => {
   return res.status(200).send(productList);
 });
 
+router.get("/:id", auth.auth, async (req, res) => {
+  const id = req.params.id;
+  if (!mongoose.isValidObjectId(id)) {
+    return res
+      .status(400)
+      .json({ success: false, message: "invalid product id" });
+  }
+  const product = await Product.findById(id);
+  if (!product) {
+    return res
+      .status(404)
+      .json({ success: false, message: "product not found" });
+  }
+  return res.status(200).send(product);
+});
+
 router.get(
   "/category/:id",
   auth.auth,
@@ -76,16 +92,26 @@ router.put(
       { new: true }
     );
     if (!product) {
-      return res.status(500).json({success: false, message: 'product status cannot be updated'})
+      return res
+        .status(500)
+        .json({ success: false, message: "product status cannot be updated" });
     }
-    return res.status(200).json({success: true, message: 'product status updated successfully'})
+    return res
+      .status(200)
+      .json({ success: true, message: "product status updated successfully" });
   }
 );
 
 //POSTS
 router.post("/", auth.auth, checkRole.checkRole, async (req, res) => {
-  const { name, category, description, price, status } = req.body;
-  let product = new Product({ name, category, description, price, status });
+  const { name, categoryId, description, price, status } = req.body;
+  let product = new Product({
+    name,
+    category: categoryId,
+    description,
+    price,
+    status,
+  });
   product = await product.save();
   if (!product) {
     return res

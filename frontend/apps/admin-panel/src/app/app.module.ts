@@ -66,6 +66,7 @@ import { ConfirmationComponent } from './components/confirmation/confirmation.co
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { CategoriesFormComponent } from './components/categories-form/categories-form.component';
 import { ProductsComponent } from './pages/products/products.component';
+import { ProductsFormComponent } from './components/products-form/products-form.component';
 const routes: Route[] = [
   { path: '', component: HomePageComponent },
   {
@@ -151,6 +152,7 @@ const UI_MODULES = [
     ChangePasswordComponent,
     CategoriesFormComponent,
     ProductsComponent,
+    ProductsFormComponent,
   ],
   imports: [
     BrowserModule,
