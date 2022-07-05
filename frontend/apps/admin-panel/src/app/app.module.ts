@@ -65,7 +65,7 @@ import { CategoryComponent } from './pages/category/category.component';
 import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { CategoriesFormComponent } from './components/categories-form/categories-form.component';
-
+import { ProductsComponent } from './pages/products/products.component';
 const routes: Route[] = [
   { path: '', component: HomePageComponent },
   {
@@ -75,6 +75,7 @@ const routes: Route[] = [
     children: [
       { path: '', component: DashboardComponent },
       { path: 'category', component: CategoryComponent },
+      { path: 'products', component: ProductsComponent },
     ],
   },
   { path: '**', redirectTo: '' },
@@ -149,6 +150,7 @@ const UI_MODULES = [
     ConfirmationComponent,
     ChangePasswordComponent,
     CategoriesFormComponent,
+    ProductsComponent,
   ],
   imports: [
     BrowserModule,

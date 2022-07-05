@@ -6,6 +6,7 @@
     "admin-panel-e2e": "apps/admin-panel-e2e",
     "categories": "libs/categories",
     "deshboard": "libs/deshboard",
+    "products": "libs/products",
     "users": "libs/users",
     "utilities": "libs/utilities"
   }

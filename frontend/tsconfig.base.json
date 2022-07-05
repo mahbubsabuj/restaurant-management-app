@@ -17,6 +17,7 @@
     "paths": {
       "@frontend/categories": ["libs/categories/src/index.ts"],
       "@frontend/deshboard": ["libs/deshboard/src/index.ts"],
+      "@frontend/products": ["libs/products/src/index.ts"],
       "@frontend/users": ["libs/users/src/index.ts"],
       "@frontend/utilities": ["libs/utilities/src/index.ts"]
     }

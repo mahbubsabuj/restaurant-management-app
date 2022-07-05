@@ -42,8 +42,6 @@ export class CategoryComponent implements OnInit {
       .subscribe({
         next: (categories) => {
           this.categories = categories;
-
-          console.log(this.categories);
           this.dataSource = new MatTableDataSource(categories);
           if (this.paginator && this.sort) {
             this.dataSource.paginator = this.paginator;
@@ -53,7 +51,6 @@ export class CategoryComponent implements OnInit {
         },
         error: (error: ErrorEvent) => {
           this.ngxService.stop();
-          console.log(error);
           if (error.error.message) {
             this.toastService.errorToast(error.error.message);
           }
@@ -63,7 +60,12 @@ export class CategoryComponent implements OnInit {
   addCategory() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '550px';
-    this.dialog.open(CategoriesFormComponent, dialogConfig);
+    const dialogRef = this.dialog.open(CategoriesFormComponent, dialogConfig);
+    dialogRef.afterClosed().pipe(take(1)).subscribe({
+      next: () => {
+        this._getCategories();
+      }
+    })
   }
   editCategory(id: string) {
     const dialogConfig = new MatDialogConfig();
@@ -72,11 +74,14 @@ export class CategoryComponent implements OnInit {
       id: id,
     };
     const dialogRef = this.dialog.open(CategoriesFormComponent, dialogConfig);
-    dialogRef.afterClosed().pipe(take(1)).subscribe({
-      next: () => {
-        this._getCategories();
-      }
-    })
+    dialogRef
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe({
+        next: () => {
+          this._getCategories();
+        },
+      });
   }
   deleteCategory(id: string) {
     const dialogData: DialogData = { message: 'delete this Category' };
@@ -85,15 +90,18 @@ export class CategoryComponent implements OnInit {
     });
     dialogRef.componentInstance.EmitStatusChange.subscribe(() => {
       dialogRef.close();
+      this.ngxService.start();
       this.categoriesService
         .deleteCategory(id)
         .pipe(take(1))
         .subscribe({
           next: () => {
+            this.ngxService.stop();
             this.toastService.successToast('Category deleted successfully');
             this._getCategories();
           },
           error: (error: ErrorEvent) => {
+            this.ngxService.stop();
             if (error.error.message) {
               this.toastService.errorToast(error.error.message);
             } else {
