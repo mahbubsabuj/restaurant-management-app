@@ -5,10 +5,11 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { CategoriesService, Category } from '@frontend/categories';
-import { ToastService } from '@frontend/utilities';
+import { DialogData, ToastService } from '@frontend/utilities';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { take } from 'rxjs';
 import { CategoriesFormComponent } from '../../components/categories-form/categories-form.component';
+import { ConfirmationComponent } from '../../components/confirmation/confirmation.component';
 
 @Component({
   selector: 'frontend-category',
@@ -70,10 +71,37 @@ export class CategoryComponent implements OnInit {
     dialogConfig.data = {
       id: id,
     };
-    this.dialog.open(CategoriesFormComponent, dialogConfig);
+    const dialogRef = this.dialog.open(CategoriesFormComponent, dialogConfig);
+    dialogRef.afterClosed().pipe(take(1)).subscribe({
+      next: () => {
+        this._getCategories();
+      }
+    })
   }
   deleteCategory(id: string) {
-    //
+    const dialogData: DialogData = { message: 'delete this Category' };
+    const dialogRef = this.dialog.open(ConfirmationComponent, {
+      data: dialogData,
+    });
+    dialogRef.componentInstance.EmitStatusChange.subscribe(() => {
+      dialogRef.close();
+      this.categoriesService
+        .deleteCategory(id)
+        .pipe(take(1))
+        .subscribe({
+          next: () => {
+            this.toastService.successToast('Category deleted successfully');
+            this._getCategories();
+          },
+          error: (error: ErrorEvent) => {
+            if (error.error.message) {
+              this.toastService.errorToast(error.error.message);
+            } else {
+              this.toastService.errorToast('Category could not be deleted');
+            }
+          },
+        });
+    });
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

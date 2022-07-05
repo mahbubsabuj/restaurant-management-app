@@ -1,8 +1,12 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { CategoriesService, Category } from '@frontend/categories';
 import { DialogData, ToastService } from '@frontend/utilities';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { take } from 'rxjs';
 
 @Component({
@@ -20,13 +24,16 @@ export class CategoriesFormComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: DialogData,
     private categoriesService: CategoriesService,
-    private toastService: ToastService
+    private ngxLoader: NgxUiLoaderService,
+    private toastService: ToastService,
+    private dialogRef: MatDialogRef<CategoriesFormComponent>
   ) {}
 
   ngOnInit(): void {
     this._checkIsEditingMode();
   }
   onFormSubmit() {
+    this.ngxLoader.start();
     if (this.isEditingMode) {
       this._updateCategory();
     } else {
@@ -42,9 +49,12 @@ export class CategoriesFormComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: () => {
+          this.dialogRef.close();
+          this.ngxLoader.stop();
           this.toastService.successToast('Category added successfully');
         },
         error: (error: ErrorEvent) => {
+          this.ngxLoader.stop();
           if (error.error.message) {
             this.toastService.errorToast(error.error.message);
           } else {
@@ -63,9 +73,12 @@ export class CategoriesFormComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: () => {
+          this.dialogRef.close();
+          this.ngxLoader.stop();
           this.toastService.successToast('Category updated successfully');
         },
         error: (error: ErrorEvent) => {
+          this.ngxLoader.stop();
           if (error.error.message) {
             this.toastService.errorToast(error.error.message);
           } else {
@@ -77,6 +90,7 @@ export class CategoriesFormComponent implements OnInit {
 
   private _checkIsEditingMode() {
     if (this.data.id) {
+      this.ngxLoader.start();
       this.isEditingMode = true;
       this.id = this.data.id;
       this.categoriesService
@@ -84,6 +98,7 @@ export class CategoriesFormComponent implements OnInit {
         .pipe(take(1))
         .subscribe({
           next: (category) => {
+            this.ngxLoader.stop();
             this.categoryForm.controls['name'].setValue(category.name);
           },
         });
