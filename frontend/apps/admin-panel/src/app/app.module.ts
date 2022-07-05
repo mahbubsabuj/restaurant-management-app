@@ -64,6 +64,7 @@ import { PanelComponent } from './pages/panel/panel.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { CategoriesFormComponent } from './components/categories-form/categories-form.component';
 
 const routes: Route[] = [
   { path: '', component: HomePageComponent },
@@ -147,6 +148,7 @@ const UI_MODULES = [
     CategoryComponent,
     ConfirmationComponent,
     ChangePasswordComponent,
+    CategoriesFormComponent,
   ],
   imports: [
     BrowserModule,

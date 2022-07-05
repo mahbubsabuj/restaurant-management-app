@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const { Category } = require("../models/category");
 const auth = require("../helpers/auth");
 const checkRole = require("../helpers/checkRole");
-
 //GETS
 router.get("/", auth.auth, checkRole.checkRole, async (req, res) => {
   const categoryList = await Category.find();
@@ -37,7 +36,7 @@ router.put("/:id", auth.auth, checkRole.checkRole, async (req, res) => {
   if (!category) {
     return res
       .status(500)
-      .json({ success: false, message: "category cannot be updated" });
+      .json({ success: false, message: "category can not be updated" });
   }
   return res.status(200).send(category);
 });

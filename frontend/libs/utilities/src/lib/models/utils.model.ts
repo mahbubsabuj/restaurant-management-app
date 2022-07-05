@@ -1,5 +1,6 @@
 export interface DialogData {
-  message: string;
+  message?: string;
+  id?: string;
 }
 
 export interface Success {

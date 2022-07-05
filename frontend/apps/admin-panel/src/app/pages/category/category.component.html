@@ -2,11 +2,13 @@
   <mat-card>
     <div class="grid category-title-subtitle">
       <div class="col-10">
-        <h1 align="start">Manage Category</h1>
+        <h1 align="start"><b>Manage Category</b></h1>
         <h4>You can Add/Edit Categories Here</h4>
       </div>
       <div class="col-2">
-        <button mat-raised-button color="warn">Add Category</button>
+        <button mat-raised-button color="warn" (click)="addCategory()">
+          Add Category
+        </button>
       </div>
     </div>
   </mat-card>
@@ -33,10 +35,18 @@
       <ng-container matColumnDef="_id">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let row">
-          <button mat-icon-button color="primary">
+          <button
+            mat-icon-button
+            color="primary"
+            (click)="editCategory(row._id)"
+          >
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="warn">
+          <button
+            mat-icon-button
+            color="warn"
+            (click)="deleteCategory(row._id)"
+          >
             <mat-icon>delete</mat-icon>
           </button>
         </td>

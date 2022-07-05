@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -8,6 +8,7 @@ import { CategoriesService, Category } from '@frontend/categories';
 import { ToastService } from '@frontend/utilities';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { take } from 'rxjs';
+import { CategoriesFormComponent } from '../../components/categories-form/categories-form.component';
 
 @Component({
   selector: 'frontend-category',
@@ -57,6 +58,22 @@ export class CategoryComponent implements OnInit {
           }
         },
       });
+  }
+  addCategory() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '550px';
+    this.dialog.open(CategoriesFormComponent, dialogConfig);
+  }
+  editCategory(id: string) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '550px';
+    dialogConfig.data = {
+      id: id,
+    };
+    this.dialog.open(CategoriesFormComponent, dialogConfig);
+  }
+  deleteCategory(id: string) {
+    //
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
