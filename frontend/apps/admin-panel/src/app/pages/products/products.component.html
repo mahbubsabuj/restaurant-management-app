@@ -42,7 +42,7 @@
       </ng-container>
       <ng-container matColumnDef="price">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
-        <td mat-cell *matCellDef="let row">{{ row.price }}</td>
+        <td mat-cell *matCellDef="let row">{{ row.price | currency }}</td>
       </ng-container>
       <ng-container matColumnDef="_id">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
@@ -57,7 +57,11 @@
           <button mat-icon-button color="warn" (click)="deleteProduct(row._id)">
             <mat-icon>delete</mat-icon>
           </button>
-          <mat-slide-toggle color="warn" [checked]="row.status" (change)="updateStatus(row._id, $event.checked)"></mat-slide-toggle>
+          <mat-slide-toggle
+            color="warn"
+            [checked]="row.status"
+            (change)="updateStatus(row._id, $event.checked)"
+          ></mat-slide-toggle>
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="columns"></tr>

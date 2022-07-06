@@ -21,7 +21,7 @@ router.get("/:id", auth.auth, async (req, res) => {
       .status(400)
       .json({ success: false, message: "invalid product id" });
   }
-  const product = await Product.findById(id);
+  const product = await Product.findById(id).populate("category");
   if (!product) {
     return res
       .status(404)
@@ -60,10 +60,10 @@ router.put("/:id", auth.auth, checkRole.checkRole, async (req, res) => {
       .status(400)
       .json({ success: false, message: "invalid product id" });
   }
-  const { name, category, description, price, status } = req.body;
+  const { name, categoryId, description, price, status } = req.body;
   const product = await Product.findByIdAndUpdate(
     id,
-    { name, category, description, price, status },
+    { name, category: categoryId, description, price, status },
     { new: true }
   );
   if (!product) {

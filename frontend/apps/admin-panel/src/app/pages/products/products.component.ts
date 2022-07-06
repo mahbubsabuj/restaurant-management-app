@@ -35,16 +35,23 @@ export class ProductsComponent implements OnInit {
   addProduct() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '550px';
-    this.dialog.open(ProductsFormComponent, dialogConfig);
+    dialogConfig.data = { id: null };
+    const dialogRef = this.dialog.open(ProductsFormComponent, dialogConfig);
+    dialogRef
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe(() => this._getProducts());
   }
 
   updateProduct(id: string) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '550px';
-    dialogConfig.data = {
-      id,
-    };
-    this.dialog.open(ProductsFormComponent, dialogConfig);
+    dialogConfig.data = { id };
+    const dialogRef = this.dialog.open(ProductsFormComponent, dialogConfig);
+    dialogRef
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe(() => this._getProducts());
   }
 
   updateStatus(id: string, checked: boolean) {
