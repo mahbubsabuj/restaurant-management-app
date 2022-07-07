@@ -9,8 +9,12 @@
     <mat-icon>account_circle</mat-icon>
   </button>
   <mat-menu #profile="matMenu" class="">
-    <button mat-menu-item (click)="changePassword()"><mat-icon>password</mat-icon> Change Password</button>
-    <button mat-menu-item (click)="logOut()"><mat-icon>exit_to_app</mat-icon> Sign Out</button>
+    <button mat-menu-item (click)="changePassword()">
+      <mat-icon>password</mat-icon> Change Password
+    </button>
+    <button mat-menu-item (click)="logOut()">
+      <mat-icon>exit_to_app</mat-icon> Sign Out
+    </button>
   </mat-menu>
 </mat-toolbar>
 <mat-sidenav-container>
@@ -28,7 +32,7 @@
         <mat-icon>inventory_2</mat-icon>
         Products
       </a>
-      <a mat-raised-button>
+      <a mat-raised-button routerLink="orders">
         <mat-icon>shopping_bag</mat-icon>
         Orders
       </a>

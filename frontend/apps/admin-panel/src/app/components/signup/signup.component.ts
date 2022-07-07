@@ -40,8 +40,9 @@ export class SignupComponent {
       .pipe(take(1))
       .subscribe({
         next: () => {
-          this.ngxLoaderService.stop()
-          console.log('success');
+          this.ngxLoaderService.stop();
+          
+          this.dialogRef.close();
         },
         error: (error) => {
           this.ngxLoaderService.stop();

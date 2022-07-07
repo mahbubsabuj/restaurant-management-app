@@ -67,6 +67,7 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { CategoriesFormComponent } from './components/categories-form/categories-form.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { ProductsFormComponent } from './components/products-form/products-form.component';
+import { OrdersComponent } from './pages/orders/orders.component';
 const routes: Route[] = [
   { path: '', component: HomePageComponent },
   {
@@ -77,6 +78,7 @@ const routes: Route[] = [
       { path: '', component: DashboardComponent },
       { path: 'category', component: CategoryComponent },
       { path: 'products', component: ProductsComponent },
+      { path: 'orders', component: OrdersComponent },
     ],
   },
   { path: '**', redirectTo: '' },
@@ -153,6 +155,7 @@ const UI_MODULES = [
     CategoriesFormComponent,
     ProductsComponent,
     ProductsFormComponent,
+    OrdersComponent,
   ],
   imports: [
     BrowserModule,

@@ -4,6 +4,7 @@
   "projects": {
     "admin-panel": "apps/admin-panel",
     "admin-panel-e2e": "apps/admin-panel-e2e",
+    "bills": "libs/bills",
     "categories": "libs/categories",
     "deshboard": "libs/deshboard",
     "products": "libs/products",

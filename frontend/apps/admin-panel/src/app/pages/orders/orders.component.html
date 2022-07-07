@@ -1,0 +1,91 @@
+<div class="category">
+  <mat-card>
+    <div class="grid">
+      <div class="col-10">
+        <h1 align="start"><b>Manage Orders</b></h1>
+        <h4>You can Add/Edit Order Here</h4>
+      </div>
+      <div class="col-2">
+        <button mat-raised-button color="warn">Add Product</button>
+      </div>
+    </div>
+  </mat-card>
+  <mat-card>
+    <h1 align="start"><b>Customer Details</b></h1>
+    <form [formGroup]="billsForm">
+      <div class="grid">
+        <div class="col-3">
+          <mat-form-field appearance="fill" fxFlex>
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" required="true" />
+            <mat-error
+              *ngIf="
+                billsForm.controls['name'].invalid &&
+                billsForm.controls['name'].touched
+              "
+            >
+              <span
+                *ngIf="
+                  billsForm.controls['name'].errors &&
+                  billsForm.controls['name'].errors['required']
+                "
+              >
+                This Field is mendatory.</span
+              >
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <mat-form-field appearance="fill" fxFlex>
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" required="true" />
+            <mat-error
+              *ngIf="
+                billsForm.controls['email'].invalid &&
+                billsForm.controls['email'].touched
+              "
+            >
+              <span
+                *ngIf="
+                  billsForm.controls['email'].errors &&
+                  billsForm.controls['email'].errors['required']
+                "
+              >
+                This Field is mendatory.</span
+              >
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-3">
+          <mat-form-field appearance="fill" fxFlex>
+            <mat-label>Contact Number</mat-label>
+            <span matPrefix style="font-size: 18px">+880 &nbsp;</span>
+            <input
+              type="tel"
+              matInput
+              formControlName="contactNumber"
+              required="true"
+              placeholder="1300000000"
+            />
+            <mat-error
+              *ngIf="
+                billsForm.controls['contactNumber'].invalid &&
+                billsForm.controls['contactNumber'].touched
+              "
+            >
+              <span
+                *ngIf="
+                  billsForm.controls['contactNumber'].errors &&
+                  billsForm.controls['contactNumber'].errors['required']
+                "
+              >
+                This Field is mendatory.</span
+              >
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-3">Payment Method</div>
+      </div>
+    </form>
+  </mat-card>
+</div>

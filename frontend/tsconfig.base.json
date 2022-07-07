@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@frontend/bills": ["libs/bills/src/index.ts"],
       "@frontend/categories": ["libs/categories/src/index.ts"],
       "@frontend/deshboard": ["libs/deshboard/src/index.ts"],
       "@frontend/products": ["libs/products/src/index.ts"],
