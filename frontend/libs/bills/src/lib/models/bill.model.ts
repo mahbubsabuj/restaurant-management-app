@@ -10,8 +10,8 @@ export interface Bill {
   name: string;
   email: string;
   phoneNumber: string;
-  uuid: string;
+  uuid?: string;
   paymentMethod: string;
-  productDetails: Cart[];
+  productDetails: string;
   createdBy: string;
 }
