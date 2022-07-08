@@ -1,5 +1,5 @@
 <div class="form">
-  <mat-toolbar color="warn">
+  <mat-toolbar color="primary">
     <mat-toolbar-row fxLayout="row">
       <span class="title-center">{{
         isEditingMode ? 'Edit Product' : 'Add Product'
@@ -73,7 +73,7 @@
           <br />
           <mat-slide-toggle
             formControlName="status"
-            color="warn"
+            color="primary"
           ></mat-slide-toggle>
         </div>
         <div class="col-12">
@@ -104,14 +104,14 @@
     <mat-dialog-actions align="center">
       <button
         mat-raised-button
-        color="warn"
+        color="primary"
         type="submit"
         (click)="onFormSubmit()"
         [disabled]="productForm.invalid"
       >
         {{ isEditingMode ? 'Update' : 'Add' }}
       </button>
-      <button mat-raised-button color="primary" mat-dialog-close="true">
+      <button mat-raised-button color="warn" mat-dialog-close="true">
         Close
       </button>
     </mat-dialog-actions>

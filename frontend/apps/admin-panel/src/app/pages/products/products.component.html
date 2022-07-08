@@ -6,19 +6,19 @@
         <h4>You can Add/Edit Products Here</h4>
       </div>
       <div class="col-2">
-        <button mat-raised-button color="warn" (click)="addProduct()">
+        <button mat-raised-button color="primary" (click)="addProduct()">
           Add Product
         </button>
       </div>
     </div>
   </mat-card>
   <mat-card>
-    <mat-form-field appearance="fill" color="warn">
+    <mat-form-field appearance="fill" color="primary">
       <mat-label>Filter</mat-label>
       <input
         matInput
         (keyup)="applyFilter($event)"
-        placeholder="Ex. Mia"
+        placeholder=""
         #input
         style="width: 100%"
       />
@@ -58,7 +58,7 @@
             <mat-icon>delete</mat-icon>
           </button>
           <mat-slide-toggle
-            color="warn"
+            color="primary"
             [checked]="row.status"
             (change)="updateStatus(row._id, $event.checked)"
           ></mat-slide-toggle>

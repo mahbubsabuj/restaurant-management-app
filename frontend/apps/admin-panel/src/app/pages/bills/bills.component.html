@@ -4,7 +4,7 @@
     <h4>You can View / Delete Bills Here</h4>
   </mat-card>
   <mat-card>
-    <mat-form-field appearance="fill" color="warn">
+    <mat-form-field appearance="fill" color="primary">
       <mat-label>Filter</mat-label>
       <input
         matInput
@@ -44,10 +44,10 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
         <td mat-cell *matCellDef="let row">
-          <button mat-icon-button color="warn" (click)="viewBill(row)">
+          <button mat-icon-button color="primary" (click)="viewBill(row)">
             <mat-icon>visibility</mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="getPDF(row._id)">
+          <button mat-icon-button color="primary" (click)="getPDF(row._id)">
             <mat-icon>receipt_long</mat-icon>
           </button>
           <button mat-icon-button color="warn" (click)="deleteBill(row._id)">
