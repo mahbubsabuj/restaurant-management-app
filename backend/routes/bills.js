@@ -41,6 +41,7 @@ router.post("/generateReport", auth.auth, async (req, res) => {
     paymentMethod,
     total,
     productDetails: productDetailsReport,
+    cartItems: productDetailsReport,
     createdBy,
   });
   bill = await bill.save();
@@ -76,21 +77,19 @@ router.post("/generateReport", auth.auth, async (req, res) => {
               error: error,
             });
           }
-          return res
-            .status(200)
-            .json({
-              success: true,
-              message: "",
-              uuid: generatedUUID,
-              billId: bill._id,
-            });
+          return res.status(200).json({
+            success: true,
+            message: "",
+            uuid: generatedUUID,
+            billId: bill._id,
+          });
         });
     }
   );
 });
 
 router.post("/getPdf/:id", async (req, res) => {
-  console.log("Im here 3")
+  console.log("Im here 3");
   const id = req.params.id;
   const bill = await Bill.findById(id);
   if (!bill) {
@@ -108,10 +107,10 @@ router.post("/getPdf/:id", async (req, res) => {
     productDetails,
   } = bill;
   const pdfPath = `./reports/${uuid}.pdf`;
-  console.log("Im here 5")
+  console.log("Im here 5");
   if (false) {
     //fs.existsSync(pdfPath)
-    console.log("Im here 6")
+    console.log("Im here 6");
     res.contentType("application/pdf");
     fs.createReadStream(pdfPath).pipe(res);
   } else {
@@ -135,7 +134,7 @@ router.post("/getPdf/:id", async (req, res) => {
             error: error,
           });
         }
-        console.log('Im here 2')
+        console.log("Im here 2");
         pdf.create(results).toFile(`./reports/${uuid}.pdf`, (error, data) => {
           if (error) {
             return res.status(500).json({
@@ -146,7 +145,7 @@ router.post("/getPdf/:id", async (req, res) => {
           }
           res.status(200).contentType("application/pdf");
           fs.createReadStream(pdfPath).pipe(res);
-          console.log("Im here")
+          console.log("Im here");
         });
       }
     );

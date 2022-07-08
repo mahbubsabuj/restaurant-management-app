@@ -17,7 +17,7 @@ export class PanelComponent {
     private authService: AuthService,
     private dialog: MatDialog
   ) {}
-  
+
   handleNavigation() {
     this.router.navigateByUrl('category');
   }
@@ -26,6 +26,7 @@ export class PanelComponent {
     const dialogData: DialogData = { message: 'Logout' };
     const dialogRef = this.dialog.open(ConfirmationComponent, {
       data: dialogData,
+      width: '550px',
     });
     dialogRef.componentInstance.EmitStatusChange.subscribe(() => {
       dialogRef.close();

@@ -1,11 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Bill, BillsService } from '@frontend/bills';
-import { ToastService } from '@frontend/utilities';
+import { DialogData, ToastService } from '@frontend/utilities';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { take } from 'rxjs';
+import { threadId } from 'worker_threads';
+import { ConfirmationComponent } from '../../components/confirmation/confirmation.component';
+import { ViewBillComponent } from '../../components/view-bill/view-bill.component';
 
 @Component({
   selector: 'frontend-bills',
@@ -28,7 +32,8 @@ export class BillsComponent implements OnInit {
   constructor(
     private billsService: BillsService,
     private toastService: ToastService,
-    private ngxService: NgxUiLoaderService
+    private ngxService: NgxUiLoaderService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -36,22 +41,32 @@ export class BillsComponent implements OnInit {
   }
 
   deleteBill(id: string) {
-    this.billsService
-      .deleteBill(id)
-      .pipe(take(1))
-      .subscribe({
-        next: () => {
-          this.toastService.successToast('Bill deleted successfully');
-          this._getBills();
-        },
-        error: () => {
-          this.toastService.errorToast('Bill could not be deleted');
-        },
-      });
+    const dialogData: DialogData = { message: 'delete this bill' };
+    const dialogRef = this.dialog.open(ConfirmationComponent, {
+      data: dialogData,
+    });
+    dialogRef.componentInstance.EmitStatusChange.pipe(take(1)).subscribe(() => {
+      dialogRef.close();
+      this.billsService
+        .deleteBill(id)
+        .pipe(take(1))
+        .subscribe({
+          next: () => {
+            this.toastService.successToast('Bill deleted successfully');
+            this._getBills();
+          },
+          error: () => {
+            this.toastService.errorToast('Bill could not be deleted');
+          },
+        });
+    });
   }
 
-  viewBill(id: string) {
-    //
+  viewBill(bill: Bill) {
+    const dialogRef = this.dialog.open(ViewBillComponent, {
+      data: bill,
+      width: '550px',
+    });
   }
 
   getPDF(id: string) {

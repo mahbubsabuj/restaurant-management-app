@@ -14,5 +14,6 @@ export interface Bill {
   uuid?: string;
   paymentMethod: string;
   productDetails: string;
+  cartItems?: Cart[];
   createdBy: string;
 }

@@ -8,6 +8,7 @@ const billSchema = mongoose.Schema({
   paymentMethod: { type: String, required: true },
   total: { type: Number, required: true },
   productDetails: { type: Object, default: null },
+  cartItems: { type: Object, default: null },
   createdBy: { type: mongoose.Schema.Types.ObjectId, required: true },
 });
 
