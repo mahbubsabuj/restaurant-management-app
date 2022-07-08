@@ -68,6 +68,9 @@ import { CategoriesFormComponent } from './components/categories-form/categories
 import { ProductsComponent } from './pages/products/products.component';
 import { ProductsFormComponent } from './components/products-form/products-form.component';
 import { OrdersComponent } from './pages/orders/orders.component';
+import { BillsComponent } from './pages/bills/bills.component';
+import { ViewBillComponent } from './components/view-bill/view-bill.component';
+import { UsersComponent } from './pages/users/users.component';
 const routes: Route[] = [
   { path: '', component: HomePageComponent },
   {
@@ -79,6 +82,8 @@ const routes: Route[] = [
       { path: 'category', component: CategoryComponent },
       { path: 'products', component: ProductsComponent },
       { path: 'orders', component: OrdersComponent },
+      { path: 'bills', component: BillsComponent },
+      { path: 'users', component: UsersComponent },
     ],
   },
   { path: '**', redirectTo: '' },
@@ -156,6 +161,9 @@ const UI_MODULES = [
     ProductsComponent,
     ProductsFormComponent,
     OrdersComponent,
+    BillsComponent,
+    ViewBillComponent,
+    UsersComponent,
   ],
   imports: [
     BrowserModule,

@@ -153,6 +153,7 @@ export class OrdersComponent implements OnInit {
     this.cartItems.forEach((item) => {
       this.subTotal += item.price * item.quantity;
     });
+    this.dataSource = new MatTableDataSource(this.cartItems);
     this._checkFormValidity();
   }
 
@@ -177,10 +178,6 @@ export class OrdersComponent implements OnInit {
           this.orderForm.controls['total'].setValue(0);
         },
       });
-  }
-
-  downloadPDF(uuid: string) {
-    const data = { uuid: uuid };
   }
 
   private _getCategories() {

@@ -11,8 +11,8 @@ import { Bill } from '../models/bill.model';
 export class BillsService {
   constructor(private httpClient: HttpClient) {}
 
-  getBills(): Observable<Bill> {
-    return this.httpClient.get<Bill>(`${environment.apiURL}/bills`);
+  getBills(): Observable<Bill[]> {
+    return this.httpClient.get<Bill[]>(`${environment.apiURL}/bills`);
   }
 
   deleteBill(id: string): Observable<unknown> {
