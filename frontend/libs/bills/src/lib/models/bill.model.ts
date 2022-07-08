@@ -10,6 +10,7 @@ export interface Bill {
   name: string;
   email: string;
   phoneNumber: string;
+  total: number;
   uuid?: string;
   paymentMethod: string;
   productDetails: string;

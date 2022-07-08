@@ -3,9 +3,11 @@ export interface DialogData {
   id?: string;
 }
 
-export interface Success {
+export interface SuccessMsg {
   success: boolean;
   message: string;
+  uuid?: string;
+  billId?: string;
 }
 
 export interface Category {

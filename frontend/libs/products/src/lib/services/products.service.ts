@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Success } from '@frontend/utilities';
+import { SuccessMsg } from '@frontend/utilities';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { Product } from '../models/product.model';
@@ -32,8 +32,8 @@ export class ProductsService {
     );
   }
 
-  updateProductStatus(id: string, status: boolean): Observable<Success> {
-    return this.httpClient.put<Success>(
+  updateProductStatus(id: string, status: boolean): Observable<SuccessMsg> {
+    return this.httpClient.put<SuccessMsg>(
       `${environment.apiURL}/products/updateStatus/${id}`,
       { status }
     );
@@ -46,8 +46,8 @@ export class ProductsService {
     );
   }
 
-  deleteProduct(id: string): Observable<Success> {
-    return this.httpClient.delete<Success>(
+  deleteProduct(id: string): Observable<SuccessMsg> {
+    return this.httpClient.delete<SuccessMsg>(
       `${environment.apiURL}/products/${id}`
     );
   }

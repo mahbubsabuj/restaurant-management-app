@@ -31,6 +31,7 @@ router.post("/generateReport", auth.auth, async (req, res) => {
     productDetails,
     createdBy,
   } = req.body;
+
   const productDetailsReport = JSON.parse(productDetails);
   let bill = new Bill({
     name,
@@ -68,7 +69,6 @@ router.post("/generateReport", auth.auth, async (req, res) => {
       pdf
         .create(results)
         .toFile(`./reports/${generatedUUID}.pdf`, (error, data) => {
-          console.log(error);
           if (error) {
             return res.status(500).json({
               success: false,
@@ -78,13 +78,19 @@ router.post("/generateReport", auth.auth, async (req, res) => {
           }
           return res
             .status(200)
-            .json({ success: true, message: "", uuid: generatedUUID });
+            .json({
+              success: true,
+              message: "",
+              uuid: generatedUUID,
+              billId: bill._id,
+            });
         });
     }
   );
 });
 
-router.post("/getpdf/:id", async (req, res) => {
+router.post("/getPdf/:id", async (req, res) => {
+  console.log("Im here 3")
   const id = req.params.id;
   const bill = await Bill.findById(id);
   if (!bill) {
@@ -102,7 +108,10 @@ router.post("/getpdf/:id", async (req, res) => {
     productDetails,
   } = bill;
   const pdfPath = `./reports/${uuid}.pdf`;
-  if (fs.existsSync(pdfPath)) {
+  console.log("Im here 5")
+  if (false) {
+    //fs.existsSync(pdfPath)
+    console.log("Im here 6")
     res.contentType("application/pdf");
     fs.createReadStream(pdfPath).pipe(res);
   } else {
@@ -126,8 +135,8 @@ router.post("/getpdf/:id", async (req, res) => {
             error: error,
           });
         }
+        console.log('Im here 2')
         pdf.create(results).toFile(`./reports/${uuid}.pdf`, (error, data) => {
-          console.log(error);
           if (error) {
             return res.status(500).json({
               success: false,
@@ -135,8 +144,9 @@ router.post("/getpdf/:id", async (req, res) => {
               error: error,
             });
           }
-          res.contentType("application/pdf");
+          res.status(200).contentType("application/pdf");
           fs.createReadStream(pdfPath).pipe(res);
+          console.log("Im here")
         });
       }
     );
