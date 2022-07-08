@@ -89,7 +89,6 @@ router.post("/generateReport", auth.auth, async (req, res) => {
 });
 
 router.post("/getPdf/:id", async (req, res) => {
-  console.log("Im here 3");
   const id = req.params.id;
   const bill = await Bill.findById(id);
   if (!bill) {
@@ -107,10 +106,7 @@ router.post("/getPdf/:id", async (req, res) => {
     productDetails,
   } = bill;
   const pdfPath = `./reports/${uuid}.pdf`;
-  console.log("Im here 5");
-  if (false) {
-    //fs.existsSync(pdfPath)
-    console.log("Im here 6");
+  if (fs.existsSync(pdfPath)) {
     res.contentType("application/pdf");
     fs.createReadStream(pdfPath).pipe(res);
   } else {
@@ -134,7 +130,6 @@ router.post("/getPdf/:id", async (req, res) => {
             error: error,
           });
         }
-        console.log("Im here 2");
         pdf.create(results).toFile(`./reports/${uuid}.pdf`, (error, data) => {
           if (error) {
             return res.status(500).json({
@@ -145,7 +140,6 @@ router.post("/getPdf/:id", async (req, res) => {
           }
           res.status(200).contentType("application/pdf");
           fs.createReadStream(pdfPath).pipe(res);
-          console.log("Im here");
         });
       }
     );

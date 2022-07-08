@@ -74,6 +74,7 @@ export class OrdersComponent implements OnInit {
       total: this.subTotal,
       createdBy: this.userId,
     };
+    this.ngxService.start();
     this.billsService
       .generateReport(bill)
       .pipe(take(1))
@@ -86,13 +87,21 @@ export class OrdersComponent implements OnInit {
             .subscribe({
               next: (blob: Blob) => {
                 const file = new Blob([blob], { type: 'application/pdf' });
-                const fileURL = URL.createObjectURL(file);
-                window.open(fileURL, '_blank', 'width=1000, height=800');
+                // const fileURL = URL.createObjectURL(file);
+                const fileName = Date.now().toString();
+                saveAs(file, fileName + '.pdf');
+                this.ngxService.stop();
+                // window.open(fileURL, '_blank', 'width=1000, height=800');
+              },
+              error: () => {
+                this.ngxService.stop();
+                this.toastService.errorToast('Server error');
               },
             });
         },
         error: (error) => {
-          console.log(error);
+          this.toastService.errorToast(error.error.message || 'Server error');
+          this.ngxService.stop();
         },
       });
   }
@@ -104,10 +113,12 @@ export class OrdersComponent implements OnInit {
 
   addToCart() {
     const id = this.orderForm.controls['product'].value;
+    this.ngxService.start();
     this.productsService
       .getProduct(id)
       .pipe(take(1))
       .subscribe((product) => {
+        this.ngxService.stop();
         const cartItem: Cart = {
           name: product.name || '',
           category: product.category?.name || '',
@@ -166,11 +177,13 @@ export class OrdersComponent implements OnInit {
   }
 
   getProductByCategory(id: string) {
+    this.ngxService.start();
     this.productsService
       .getPorductsByCategory(id)
       .pipe(take(1))
       .subscribe({
         next: (products) => {
+          this.ngxService.stop();
           this.products = products;
           this.orderForm.controls['product'].setValue('');
           this.orderForm.controls['quantity'].setValue(0);

@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { Bill, Cart } from '@frontend/bills';
 
 @Component({
@@ -14,7 +14,7 @@ export class ViewBillComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public bill: Bill) {}
   ngOnInit(): void {
     if (this.bill.cartItems) {
-      this.dataSource = new MatTableDataSource( this.bill.cartItems);
+      this.dataSource = new MatTableDataSource(this.bill.cartItems);
     }
   }
 }

@@ -7,10 +7,9 @@ import { Bill, BillsService } from '@frontend/bills';
 import { DialogData, ToastService } from '@frontend/utilities';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { take } from 'rxjs';
-import { threadId } from 'worker_threads';
 import { ConfirmationComponent } from '../../components/confirmation/confirmation.component';
 import { ViewBillComponent } from '../../components/view-bill/view-bill.component';
-
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'frontend-bills',
   templateUrl: './bills.component.html',
@@ -63,14 +62,31 @@ export class BillsComponent implements OnInit {
   }
 
   viewBill(bill: Bill) {
-    const dialogRef = this.dialog.open(ViewBillComponent, {
+    this.dialog.open(ViewBillComponent, {
       data: bill,
       width: '550px',
     });
   }
 
   getPDF(id: string) {
-    //
+    this.ngxService.start();
+    this.billsService
+      .getPDF(id)
+      .pipe(take(1))
+      .subscribe({
+        next: (blob: Blob) => {
+          this.ngxService.stop();
+          const file = new Blob([blob], { type: 'application/pdf' });
+          // const fileURL = URL.createObjectURL(file);
+          const fileName = Date.now().toString();
+          saveAs(file, fileName + '.pdf');
+          // window.open(fileURL, '_blank', 'width=1000, height=800');
+        },
+        error: () => {
+          this.ngxService.stop();
+          this.toastService.errorToast('Server error');
+        },
+      });
   }
 
   private _getBills() {
