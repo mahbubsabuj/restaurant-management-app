@@ -1,6 +1,6 @@
 # Restaurant Management System
 
-**Tech**
+## Technology
 
 <ul>
 <li>Angular</li>
