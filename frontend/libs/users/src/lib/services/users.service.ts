@@ -42,4 +42,10 @@ export class UsersService {
   updateUser(id: string, user: User): Observable<User> {
     return this.httpClient.put<User>(`${environment.apiURL}/users/${id}`, user);
   }
+
+  deleteUser(id: string): Observable<SuccessMsg> {
+    return this.httpClient.delete<SuccessMsg>(
+      `${environment.apiURL}/users/${id}`
+    );
+  }
 }

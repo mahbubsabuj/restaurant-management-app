@@ -6,6 +6,7 @@ const { User } = require("../models/user");
 const salt = process.env.SALT;
 const auth = require("../helpers/auth");
 const checkRole = require("../helpers/checkRole");
+const { default: mongoose } = require("mongoose");
 
 //GETS
 
@@ -116,6 +117,22 @@ router.put("/changePassword/:id", auth.auth, async (req, res) => {
   return res
     .status(200)
     .json({ success: true, message: "password updated successfully" });
+});
+
+router.delete("/:id", auth.auth, checkRole.checkRole, async (req, res) => {
+  const id = req.params.id;
+  if (!mongoose.isValidObjectId(id)) {
+    return res.status(403).json({ success: false, message: "Invalid user id" });
+  }
+  const user = await User.findByIdAndDelete(id);
+  if (!user) {
+    return res
+      .status(500)
+      .json({ success: false, message: "User could not be deleted" });
+  }
+  return res
+    .status(200)
+    .json({ success: true, message: "User deleted successfully" });
 });
 
 module.exports = router;

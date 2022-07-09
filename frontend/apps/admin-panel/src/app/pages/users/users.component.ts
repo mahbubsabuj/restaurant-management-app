@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { User, UsersService } from '@frontend/users';
-import { ToastService } from '@frontend/utilities';
+import { DialogData, ToastService } from '@frontend/utilities';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { take } from 'rxjs';
+import { ConfirmationComponent } from '../../components/confirmation/confirmation.component';
 
 @Component({
   selector: 'frontend-users',
@@ -13,7 +15,7 @@ import { take } from 'rxjs';
   styles: [],
 })
 export class UsersComponent implements OnInit {
-  columns: string[] = ['name', '_id'];
+  columns: string[] = ['name', 'email', 'contactNumber', 'actions'];
   users: User[] = [];
   dataSource: MatTableDataSource<User> | null = null;
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
@@ -21,7 +23,8 @@ export class UsersComponent implements OnInit {
   constructor(
     private usersService: UsersService,
     private ngxService: NgxUiLoaderService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -48,6 +51,55 @@ export class UsersComponent implements OnInit {
         },
       });
   }
+
+  changeUserStatus(id: string, isChecked: boolean) {
+    const user: User = {
+      status: isChecked,
+      role: isChecked ? 'admin' : 'user',
+    };
+    this.ngxService.start();
+    this.usersService
+      .updateUser(id, user)
+      .pipe(take(1))
+      .subscribe({
+        next: () => {
+          this.ngxService.stop();
+          this.toastService.successToast('User status updated successfully');
+          this._getAllUsers();
+        },
+        error: () => {
+          this.ngxService.stop();
+          this.toastService.errorToast('User status could not be updated');
+        },
+      });
+  }
+
+  deleteUser(id: string) {
+    const dialogData: DialogData = { message: 'Logout' };
+    const dialogRef = this.dialog.open(ConfirmationComponent, {
+      data: dialogData,
+      width: '550px',
+    });
+    dialogRef.componentInstance.EmitStatusChange.pipe(take(1)).subscribe(() => {
+      dialogRef.close();
+      this.ngxService.start();
+      this.usersService
+        .deleteUser(id)
+        .pipe(take(1))
+        .subscribe({
+          next: () => {
+            this.ngxService.stop();
+            this.toastService.successToast('User deleted successfully');
+            this._getAllUsers();
+          },
+          error: () => {
+            this.ngxService.stop();
+            this.toastService.errorToast('User could not be deleted');
+          },
+        });
+    });
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     if (this.dataSource) {

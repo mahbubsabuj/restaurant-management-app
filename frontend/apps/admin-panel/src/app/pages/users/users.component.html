@@ -1,14 +1,7 @@
 <div class="category">
   <mat-card>
-    <div class="grid">
-      <div class="col-10">
-        <h1 align="start"><b>Manage Users</b></h1>
-        <h4>You can Edit/Delete Users Here</h4>
-      </div>
-      <div class="col-2">
-        <button mat-raised-button color="primary">Add Category</button>
-      </div>
-    </div>
+    <h1 align="start"><b>Manage Users</b></h1>
+    <h4>You can manage Users status / Delete user from Here</h4>
   </mat-card>
   <mat-card>
     <mat-form-field appearance="fill" color="primary">
@@ -16,7 +9,7 @@
       <input
         matInput
         (keyup)="applyFilter($event)"
-        placeholder="Ex. Mia"
+        placeholder="..."
         #input
         style="width: 100%"
       />
@@ -30,15 +23,28 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
         <td mat-cell *matCellDef="let row">{{ row.name }}</td>
       </ng-container>
-      <ng-container matColumnDef="_id">
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+        <td mat-cell *matCellDef="let row">{{ row.email }}</td>
+      </ng-container>
+      <ng-container matColumnDef="contactNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Contact Number
+        </th>
+        <td mat-cell *matCellDef="let row">{{ row.contactNumber }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let row">
-          <button mat-icon-button color="primary">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn">
+          <button mat-icon-button color="warn" (click)="deleteUser(row._id)">
             <mat-icon>delete</mat-icon>
           </button>
+          <mat-slide-toggle
+            color="primary"
+            [checked]="row.status"
+            (change)="changeUserStatus(row._id, $event.checked)"
+          ></mat-slide-toggle>
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="columns"></tr>

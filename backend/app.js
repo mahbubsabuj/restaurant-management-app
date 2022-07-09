@@ -17,11 +17,13 @@ const usersRoutes = require("./routes/users");
 const categoriesRoutes = require("./routes/categories");
 const productsRoutes = require("./routes/products");
 const billsRoutes = require("./routes/bills");
+const dashboardsRoutes = require("./routes/deshboards");
 
 app.use("/users", usersRoutes);
 app.use("/categories", categoriesRoutes);
 app.use("/products", productsRoutes);
 app.use("/bills", billsRoutes);
+app.use("/dashboards", dashboardsRoutes);
 //connection
 
 mongoose

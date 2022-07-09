@@ -43,6 +43,7 @@ export class CategoryComponent implements OnInit {
         next: (categories) => {
           this.categories = categories;
           this.dataSource = new MatTableDataSource(categories);
+
           if (this.paginator && this.sort) {
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
