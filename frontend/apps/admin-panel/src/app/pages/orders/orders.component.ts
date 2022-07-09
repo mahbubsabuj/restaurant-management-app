@@ -86,6 +86,7 @@ export class OrdersComponent implements OnInit {
             .pipe(take(1))
             .subscribe({
               next: (blob: Blob) => {
+                this.orderForm.reset();
                 const file = new Blob([blob], { type: 'application/pdf' });
                 // const fileURL = URL.createObjectURL(file);
                 const fileName = Date.now().toString();

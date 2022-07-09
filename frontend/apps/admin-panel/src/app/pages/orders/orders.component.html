@@ -6,7 +6,8 @@
         <h4>You can create Orders from here</h4>
       </div>
       <div class="col-2">
-        <button mat-raised-button color="primary" [disabled]="!this.orderForm.controls['valid'].value" (click)="onFormSubmit()">Add Order & Get Bill</button>
+        <button mat-raised-button color="primary" [disabled]="orderForm.controls['name'].invalid || orderForm.controls['email'].invalid || orderForm.controls['contactNumber'].invalid || orderForm.controls['paymentMethod'].invalid || cartItems.length === 0
+        " (click)="onFormSubmit()">Add Order & Get Bill</button>
       </div>
     </div>
   </mat-card>
@@ -233,7 +234,7 @@
     </form>
     <div class="grid">
       <div class="col-2" (click)="addToCart()">
-        <button mat-raised-button color="primary" [disabled]="!this.orderForm.controls['product'].valid">Add</button>
+        <button mat-raised-button color="primary" [disabled]="orderForm.controls['product'].invalid || orderForm.controls['category'].invalid">Add</button>
       </div>
       <div class="spacer"></div>
       <div class="col-2">
